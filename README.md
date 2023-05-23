@@ -1,1 +1,1 @@
-# Grieb_et_al_2023
+This repository contains the code used to generate the results in Grieb, N., Weiss, R., Sia, J., Fischer, L., Born, P., Boldt, A., ... & Merz, M. (2023). Single cell multi-omic dissection of response and resistance to chimeric antigen receptor T cells against BCMA in relapsed multiple myeloma. 
