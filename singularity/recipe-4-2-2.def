@@ -1,0 +1,175 @@
+Bootstrap: docker
+From: ubuntu:20.04
+
+%labels
+  Maintainer Michael Rade
+  R_Version 4.2.2
+  RStudio_Version 2021.09.2-382
+
+%runscript
+  exec rserver "${@}"
+
+%apprun rserver
+  exec rserver "${@}"
+
+%environment
+  export PATH=/usr/lib/rstudio-server/bin:${PATH}
+
+%setup
+  install -Dv \
+    rstudio_auth.sh \
+    ${SINGULARITY_ROOTFS}/usr/lib/rstudio-server/bin/rstudio_auth
+
+%post
+  # Software versions
+  export R_VERSION=4.2.2
+  export RSTUDIO_VERSION=2021.09.2-382
+
+  # Get dependencies
+  apt-get update
+  apt-get install -y --no-install-recommends \
+    locales \
+    wget
+
+  # Get fonts
+  apt-get update
+  echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections
+  apt-get install -y ubuntu-restricted-extras
+
+  # Configure default locale
+  echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+  locale-gen en_US.utf8
+  /usr/sbin/update-locale LANG=en_US.UTF-8
+  export LC_ALL=en_US.UTF-8
+  export LANG=en_US.UTF-8
+
+  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  apt install -y ./google-chrome-stable_current_amd64.deb
+
+  # Get dependencies
+  apt-get update
+  apt-get install -y software-properties-common
+#  add-apt-repository ppa:ubuntugis/ubuntugis-unstable
+#  apt-get update
+  apt-get install -y --no-install-recommends \
+    libpoppler-cpp-dev \
+    libgfortran4 \
+    libopenblas-dev \
+    libstdc++6 \
+    git \
+    libgit2-dev \
+    libpango1.0-dev \
+    libblas3 \
+    libblas-dev \
+    liblapack-dev \
+    liblapack3 \
+    curl \
+    gcc \
+    fort77 \
+    aptitude \
+    g++ \
+    xorg-dev \
+    libreadline-dev \
+    gfortran \
+    libcurl4-openssl-dev \
+    libssl-dev \
+    libxml2-dev \
+    libcairo2-dev \
+    libxt-dev \
+    libbz2-dev \
+    liblzma-dev \
+    ca-certificates \
+    gdebi-core \
+    zlib1g-dev \
+    r-cran-rjags \
+    imagemagick \
+    libmagick++-dev \
+    rng-tools \
+    libtool \
+    libgmp-dev \
+    libmpfr-dev \
+    build-essential \
+    libboost-all-dev \
+    libssh2-1-dev \
+    htop \
+    less \
+    r-cran-rjava \
+    bedtools \
+    libx11-dev \
+    mesa-common-dev \
+    libglu1-mesa-dev \
+    libpcre2-dev \
+    libpcre3-dev \
+    libudunits2-dev \
+    libv8-dev \
+    gdal-bin \
+    libgdal-dev \
+    libproj-dev \
+    libfftw3-dev \
+    libgsl-dev \
+    libsodium-dev \
+    cmake
+
+  apt-get install -y `apt-get --assume-no install texlive-full | \
+    awk '/The following additional packages will be installed/{f=1;next} /Suggested packages/{f=0} f' | \
+    tr ' ' '\n' | \
+        grep -vP 'doc$' | \
+        grep -vP 'texlive-lang' | \
+        grep -vP 'latex-cjk' | \
+        tr '\n' ' '`
+
+  apt-get install -y --no-install-recommends \
+    texlive-lang-german
+
+  cd $HOME
+  wget http://www.fftw.org/fftw-3.3.10.tar.gz --no-check-certificate
+  tar xvf fftw-3.3.10.tar.gz
+  cd fftw-3.3.10
+  ./configure
+  make
+  make install
+
+  cd $HOME
+  wget https://github.com/KlugerLab/FIt-SNE/archive/refs/heads/master.zip --no-check-certificate
+  unzip master.zip
+  cd FIt-SNE-master
+  g++ -std=c++11 -O3  src/sptree.cpp src/tsne.cpp src/nbodyfft.cpp  -o /bin/fast_tsne -pthread -lfftw3 -lm -Wno-address-of-packed-member
+
+  NPROCS=$((`grep -E "^processor" /proc/cpuinfo |tail -1 |awk '{print $3}'` + 1))
+  cd $HOME
+  wget https://cran.rstudio.com/src/base/R-4/R-${R_VERSION}.tar.gz --no-check-certificate
+  tar xvf R-${R_VERSION}.tar.gz
+  cd R-${R_VERSION}
+
+  ./configure --enable-R-shlib=yes
+  echo "Will use make with $NPROCS cores."
+  make -j${NPROCS}
+  make install
+  R --version
+
+  wget \
+    --no-verbose \
+    --no-check-certificate \
+    -O rstudio-server.deb \
+    "https://download2.rstudio.org/server/bionic/amd64/rstudio-server-${RSTUDIO_VERSION}-amd64.deb"
+  gdebi -n rstudio-server.deb
+  rm -f rstudio-server.deb
+
+  cd $HOME
+  wget --no-verbose https://download3.rstudio.org/ubuntu-14.04/x86_64/VERSION -O "version.txt" && \
+  VERSION=$(cat version.txt)  && \
+  wget --no-verbose "https://download3.rstudio.org/ubuntu-14.04/x86_64/shiny-server-$VERSION-amd64.deb" -O ss-latest.deb && \
+  gdebi -n ss-latest.deb && \
+  rm -f version.txt ss-latest.deb && \
+  . /etc/environment && \
+  chown shiny:shiny /var/lib/shiny-server
+  mkdir -p /var/log/shiny-server
+  chown shiny.shiny /var/log/shiny-server
+
+  # Clean up
+  rm -rf /var/lib/apt/lists/*
+  # Remove shared semaphore workaround for miniconda
+  if [ -f /rm_run_shm ]; then
+        rm /run/shm;
+        rm /rm_run_shm
+  fi
