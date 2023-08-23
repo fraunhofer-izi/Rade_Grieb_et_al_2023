@@ -17,9 +17,9 @@ The following adjustments must be made in the `run.sh` file:
 -   Set a port (variable `RSTUDIO_PORT`)
 -   Set a path for the log files (variable `TMPDIR`)
 -   The variable `RSTUDIO_PASSWORD` can be set to a password of your choice. Default is "password"
--   For parameter `auth-pam-helper` and `rsession-config-file`: Set path to this folder.
+-   For parameter `auth-pam-helper` and `rsession-config-file` in run.sh: Set path to this folder.
 
-Furthermore, set your R library path in `./singularity/rsession.conf`. :point_right: I recommend to create a new folder. From experience it always leads to conflicts when folders with libraries of another R version are used.
+Furthermore, set your R library path in `./singularity/rsession.conf`. I recommend to create a new folder. It can lead to conflicts when folders with libraries of another R version are used.
 
 Now run the following :
 
