@@ -40,9 +40,10 @@ $ export SINGULARITY_BINDPATH="/mnt/example/"
 $ export R_LIBS_USER="/home//michael.rade/R/x86_64-pc-linux-gnu-library/4.0.2.RStudioServer/"
 
 $ singularity shell rstudio-server:1.0.0.sif
+$ R
 ```
 
-You can build a Singularity image with:
+You can build this singularity image with:
 
 ``` sh
 $ sudo singularity build rstudio-server:1.0.0.sif recipe-4-2-2.def
