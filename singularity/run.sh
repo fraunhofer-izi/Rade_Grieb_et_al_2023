@@ -1,8 +1,12 @@
 #!/bin/sh
 
-module load Singularity # or install singularity: https://docs.sylabs.io/guides/latest/user-guide/quick_start.html
-export SINGULARITY_BINDPATH="/mnt/ribolution/,/mnt/workdata1/" # You can remove it when there is nothing to bind
+module load Singularity
+# or install singularity: https://docs.sylabs.io/guides/latest/user-guide/quick_start.html
 
+# You can remove the following line if there is nothing to bind
+export SINGULARITY_BINDPATH="/mnt/metadata/,/mnt/workdata/"
+
+# Define your port
 export RSTUDIO_PORT=8072
 
 # we don't want to clutter the cluster directories, so each user sets up his own
@@ -28,7 +32,7 @@ RSTUDIO_PASSWORD="password" singularity "$1" \
   --server-user $USER \
   --www-port $RSTUDIO_PORT \
   --auth-none 0 \
-  --auth-pam-helper ~/projects/2020-imSAVAR/singularity/rstudio_server/rstudio_auth.sh \
-  --rsession-config-file ~/projects/2020-imSAVAR/singularity/rstudio_server/rsession.conf \
+  --auth-pam-helper ~/projects/example/singularity/rstudio_server/rstudio_auth.sh \
+  --rsession-config-file ~/projects/example/singularity/rstudio_server/rsession.conf \
   --auth-timeout-minutes=0 \
   --auth-stay-signed-in-days=7
