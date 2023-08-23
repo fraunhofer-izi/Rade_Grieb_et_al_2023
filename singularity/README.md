@@ -27,7 +27,7 @@ Now run the following :
 $ bash run.sh run rstudio-server:1.0.0.sif
 ```
 
-You can reach RStudio Server via your webbrowser (e.g. `localhost:8083/auth-sign-in`). Use the port that you have specified in the variable `RSTUDIO_PORT`. You can log in with your current user name and password you set in `RSTUDIO_PASSWORD`.
+You can reach RStudio Server via your webbrowser (e.g. `localhost:8072/auth-sign-in`). Use the port that you have specified in the variable `RSTUDIO_PORT`. You can log in with your current user name and password you set in `RSTUDIO_PASSWORD`.
 
 ### Notes
 
