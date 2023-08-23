@@ -1,4 +1,4 @@
-## Singularity RStudio and Shiny Server
+## Singularity RStudio Server
 
 Image based on the Ubuntu 20.04 (R 4.2.2), see `./singularity/rstudio_server/recipe-4-2-2.def` for details
 
