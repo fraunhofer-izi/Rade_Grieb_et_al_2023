@@ -1,0 +1,6 @@
+levels	use_as	name	signature
+level1	positive	NaiveLike	
+level1	negative	Treg	
+level1	negative	Exh	
+level1	negative	Tfh	
+level1	negative	Th1_Gzmk	

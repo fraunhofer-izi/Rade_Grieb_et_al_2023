@@ -1,0 +1,5 @@
+levels	use_as	name	signature
+level1	positive	Exh	
+level1	negative	Treg	
+level1	negative	NaiveLike	
+level2	positive	CTL	

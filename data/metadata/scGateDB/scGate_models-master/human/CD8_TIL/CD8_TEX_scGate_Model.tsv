@@ -1,0 +1,7 @@
+levels	use_as	name	signature
+level1	positive	Exhausted	
+level2	positive	CD8_TEX	
+level2	negative	CD8_TPEX	
+level2	negative	CD8_INN	
+level2	negative	CD8_INN2	
+level2	negative	CD8_GD	

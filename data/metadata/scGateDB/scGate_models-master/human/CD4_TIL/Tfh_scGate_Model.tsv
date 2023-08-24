@@ -1,0 +1,6 @@
+levels	use_as	name	signature
+level1	positive	Exh	
+level1	negative	Treg	
+level2	positive	Tfh	
+level2	negative	CTL	
+level2	negative	Th17	

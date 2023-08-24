@@ -1,0 +1,8 @@
+levels	use_as	name	signature
+level1	positive	Immune	
+level1	positive	Megakaryocyte	
+level1	negative	Epithelial	
+level1	negative	Stromal	
+level1	negative	Erythrocyte	
+level2	positive	Megakaryocyte	
+level2	negative	Lymphoid	
