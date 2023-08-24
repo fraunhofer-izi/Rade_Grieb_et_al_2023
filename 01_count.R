@@ -10,15 +10,17 @@ mem = 190000
 cpu = 25
 mail_user = "michael.rade@izi.fraunhofer.de"
 
+# NCBI GEO xxx
 fastqs = "/mnt/ribolution/tertiary_analysis/2023-ukl-single-cell-data/grieb/CART/fastq/"
 
+# The FASTA sequences can be found in the supplementary material of the publication
 ref.gex.cilta = "/mnt/ribolution/user_worktmp/michael.rade/work/2023-Grieb-et-al-Tatlas/references/GRCh38-CiltaCel/"
 ref.gex.ide = "/mnt/ribolution/user_worktmp/michael.rade/work/2023-Grieb-et-al-Tatlas/references/GRCh38-IdeCel/"
 
 # VDJ reference: https://support.10xgenomics.com/single-cell-vdj/software/downloads/latest
 ref.vdj = "/mnt/ribolution/user_worktmp/michael.rade/work/2023-Grieb-et-al-Tatlas/references/refdata-cellranger-vdj-GRCh38-alts-ensembl-7.1.0/"
 
-# from singleron output (for ADT)
+# ADT refence  can be found in the supplementary material of the publication
 ref.features = "/mnt/ribolution/user_worktmp/michael.rade/work/2023-Grieb-et-al-Tatlas/references/feature_reference.csv"
 
 out.dir = "/mnt/ribolution/user_worktmp/michael.rade/work/2023-Grieb-et-al-Tatlas/cohorts/grieb/cellranger/"
