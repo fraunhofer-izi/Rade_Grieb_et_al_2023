@@ -1,0 +1,7 @@
+levels	use_as	name	signature
+level1	positive	CD8_N	
+level1	negative	Cytotoxic	
+level1	negative	Exhausted	
+level1	negative	CD8_INN	
+level1	negative	CD8_INN2	
+level1	negative	CD8_GD	

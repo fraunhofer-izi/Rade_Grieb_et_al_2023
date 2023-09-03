@@ -1,0 +1,363 @@
+\documentclass[10pt]{paper}
+\usepackage[bottom=1in,top=1in, left=1in, right=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{breakurl}
+\usepackage{xspace}
+\usepackage{float}
+\usepackage[export]{adjustbox}
+\usepackage{capt-of}
+\usepackage{booktabs}
+\usepackage{rotating}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{makecell}
+\usepackage{blindtext}
+\usepackage{caption}
+\usepackage{csquotes}
+\usepackage[htt]{hyphenat}
+\usepackage[ngerman,english]{babel}
+\usepackage{colortbl} % To color rows in the tables
+
+\renewcommand\_{\textunderscore\allowbreak}
+
+\definecolor{mybluei}{RGB}{82,102,145}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Shortcuts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\limma}{\texttt{limma}}
+\newcommand{\Seurat}{\texttt{Seurat}}
+\newcommand{\R}{\texttt{R}}
+\newcommand{\Bioconductor}{\texttt{Bioconductor}}
+
+\newcommand{\mr}[1]{\begingroup\color{blue}\textbf{Michael: }#1\endgroup}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Images/captions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}
+\graphicspath{%
+  {../figures/main/}
+  {../figures/supplement/}
+}
+
+% Add suffix S to figures and tables
+\setcounter{table}{0}
+\renewcommand{\thetable}{S\arabic{table}}
+
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{S\arabic{figure}}
+
+% Font size for captions
+\captionsetup{format=hang}
+\captionsetup[figure]{font=small, labelfont=bf, textfont=onehalfspacing, belowskip=5pt}
+\captionsetup[table]{font=small, labelfont=bf, textfont=onehalfspacing}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[%
+  autocite     = plain,
+  backend      = bibtex,
+  doi          = true,
+  url          = true,
+  giveninits   = true,
+  hyperref     = true,
+  maxbibnames  = 99,
+  maxcitenames = 99,
+  sortcites    = true,
+  style        = numeric,
+  sorting = none,
+  ]{biblatex}
+
+\input{bibliography-mimosis}
+\addbibresource{references.bib}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Fonts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[T1]{fontenc}
+\usepackage{charter}
+\usepackage[expert]{mathdesign}
+
+\usepackage[
+  activate={true,nocompatibility},
+  final,tracking=true,
+  kerning=true,
+  spacing=true,
+  factor=1100,
+  stretch=10,
+  shrink=10]{microtype}
+\microtypecontext{spacing=nonfrench}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Hyperlinks
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{myblue}{RGB}{82,102,145}
+
+\usepackage[
+  colorlinks = true,
+  citecolor  = myblue,
+  linkcolor  = myblue,
+  urlcolor   = myblue,
+  unicode,
+  ]{hyperref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Spacing
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{setspace}
+\onehalfspacing
+\usepackage{parskip}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Proper typesetting of units
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{siunitx}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Mathematics
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{amsmath}
+\RequirePackage{amsthm}
+\RequirePackage{dsfont}
+\RequirePackage{textcomp}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TOC, sections
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{tocloft}
+\setcounter{tocdepth}{3} % remove subsubsection from TOC
+
+\renewcommand{\cftpartfont}
+             {\usefont{T1}{qhv}{b}{n}\Large}
+\renewcommand{\cftsecfont}
+             {\usefont{T1}{bch}{b}{n}\selectfont}
+\renewcommand{\cftsubsecfont}
+             {\usefont{T1}{bch}{m}{n}\selectfont}
+
+\usepackage{titlesec}
+\titleformat*{\subsubsection}{\usefont{T1}{qhv}{b}{n}\selectfont\color{mybluei}}
+\titleformat*{\subsection}{\usefont{T1}{qhv}{b}{n}\selectfont\color{mybluei}}
+\titleformat{\section}[hang]{
+  \color{mybluei}\usefont{T1}{qhv}{b}{n}\selectfont} % "qhv" - TeX Gyre Heros, "b" - bold
+    {}
+    {0em}
+    {\hspace{-0.4pt}\Large \thesection\hspace{0.6em}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Penalties
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clubpenalty         = 10000
+\widowpenalty        = 10000
+\displaywidowpenalty = 10000
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% START; first page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[most]{tcolorbox}
+
+\newcommand{\mybox}[4]{
+    \begin{figure}[h]
+        \centering
+    \begin{tikzpicture}
+        \node[anchor=text,text width=\columnwidth-1.2cm, draw, rounded corners, line width=1pt, fill=#3, inner sep=5mm] (big) {\\#4};
+        \node[draw, rounded corners, line width=.5pt, fill=#2, anchor=west, xshift=5mm] (small) at (big.north west) {#1};
+    \end{tikzpicture}
+    \end{figure}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title, TOC, list of figures and tables
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{\vspace{7cm}Supplementary information \\ \textnormal{Single cell multi-omic dissection of response and resistance to chimeric antigen receptor T cells against BCMA in relapsed multiple myeloma}}
+% \author{...}
+
+\begin{document}
+
+\maketitle
+
+% \renewcommand*\contentsname{\vspace*{-45pt}}
+%
+% {
+%   \microtypesetup{protrusion=false}
+%   \hypersetup{linkcolor=myblue}
+%   \tableofcontents
+%   \microtypesetup{protrusion=true}
+% }
+
+% \listoffigures
+\thispagestyle{empty}
+
+\clearpage
+
+% \listoftables
+% \thispagestyle{empty}
+
+% \clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Main part
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Annotation of T cell subtypes}
+
+Although we annotated the T cells using PBMC and BMMC reference atlases with Seurat's multimodal mapping method (see methods in main part), T cells were re-annotated using the ProjecTILs framework \cite{Andreatta2021-fw}. The authors of ProjecTILs provide T cell references atlases and a comprehensive workflow (see \href{https://github.com/carmonalab}{\nolinkurl{https://github.com/carmonalab}}) to annotate T-cell subtypes at a higher resolution compared to PBMC/BMMC references.
+
+\subsection{Purifying T cell from single-cell datasets} \label{cell_filer_2}
+
+To filter for T cells, we used the \R\ package \texttt{scGate} \cite{Andreatta2022-al}, which requires as input (i) a normalized gene expression matrix or Seurat object and (ii) a "gating model" (GM) consisting of gene sets representing the cell population of interest. The GM for T cells was retrieved using \texttt{scGate::get\_scGateDB()}. The enrichment of the gene sets in each cell was estimated using the rank-based method UCell \cite{Andreatta2021-yh}. The scGate method then performs smoothing of the enrichment scores with the k-Nearest-Neighbour (kNN) algorithm by calculating the mean UCell score across neighbouring cells. Finally, a fixed threshold is applied to the kNN-smoothed enrichment scores using binary decision trees derived from the GM. T cell purification was performed for each sample.
+
+\subsubsection{T cell subtype classification and annotation} \label{cell_filer_3}
+
+To classify CD4 and CD8 T cell identities, we projected CD4 and CD8 T cells separately into two reference maps. As reference, we used the single-cell atlases for CD4 and CD8 T cells, which are part of the ProjecTILs \cite{Andreatta2021-fw} framework (CD8: \href{https://figshare.com/ndownloader/files/38921366}{\nolinkurl{https://figshare.com/ndownloader/files/38921366}}; CD4: \href{https://figshare.com/ndownloader/files/39012395}{\nolinkurl{https://figshare.com/ndownloader/files/39012395}}). Prior to classification, the T cells (see \ref{cell_filer_2}) were divided into CD4 and CD8 using the \texttt{scGate} method. The corresponding gating models were part of the downloaded T cell atlases. Running the \texttt{ProjecTILs.classifier()} function for each sample on the two maps allowed combining the identity predictions for a complete annotation of the T cell identities. Only cells that can be unequivocally assigned to one cell identity are labeled; the remaining cells (including those that receive a label by more than one reference) are assigned to "Not Estimable".
+
+In addition, we annotated CD4 and CD8 T cells lineages based on the gene expression data using following strategy: Given the  rawcounts, one cell was considered as CD8 positive or negative if the  count value of CD8A or CD8B was $>$0 or $\leq$0, respectively. One cell was considered as CD4 positive or negative if the  count value of CD4 was $>$0 or $\leq$0, respectively. This resulted in a classification of CD8-CD4+, CD8+CD4-, CD8+CD4+ and CD8-CD4- T cells. Cells that were annotated as CD8+CD4+ and whose cell identities were annotated as CD4 or CD8 by the ProjecTILs framekwork were labeled as "Not Estimable". We are aware that this is a rather conservative step. However, it allows us to avoid false positive annotations. Cells annotated as CD8+CD4- whose cell identities were annotated as CD4 by the ProjecTILs framework were also annotated as "Not Estimable" (and vice versa).
+
+To identify proliferating cell cluster, we applied the \texttt{run\_gsea} function implemented in the \texttt{clustifyr} \R\ package \cite{Fu2020-fp} using previously published  G2/M and S-phase gene sets \cite{Tirosh2016-ct} as queries. As suggested by the authors, an overclustering was conducted. For this purpose, the cluster resolution was set to 1 (see \ref{integration_analysis}). The number of permutations was set to 1000. One cluster was significantly (p-value <0.1) enriched with cell cycle genes from the G2/M and S phases and was annotated as cyclic accordingly.
+
+
+
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{figure}[ht!]
+%   \includegraphics[width=16.5cm, center]{supp_figure_pbmc_post_vs_pre.pdf}
+%   \captionsetup{format=plain, font=footnotesize}
+%   \caption[Comparing post- and pre-infusional BMMCs and PBMCs in nonCR and CR]
+%   {\textbf{Comparing post- and pre-infusional BMMCs and PBMCs in nonCR and CR.} \textbf{(a)} Comparison between post- and pre-infusional cell types in responders (CR) and non-responders (nonCR). \textbf{(b)} Differential gene expression analysis comparing post- with pre-infusional BMMCs and PBMCs in CR and nonCR. \textbf{(c)} GO term enrichment analysis of significantly differentially expressed genes (post- vs. pre-infusional). Terms are ranked by rich factor, which is the number of DE genes in the term divided by the number of background genes in that term. Dot plot depict the top 10 significantly enriched GO terms for biological processes (FDR <0.05). The dot size indicates the z-score, which is the number of DE genes with logFC >0 minus the number of DE genes with logFC <0 divided by the square root of the number of term-associated genes. Grey/white dots indicate the same number of genes with a logFC >0 and <0.
+%   }
+%   \label{fig:post_vs_pre}
+% \end{figure}
+%
+% \begin{figure}[ht!]
+%   \includegraphics[width=16cm, center]{post_PBMC_nonCR_vs_CR_ora.pdf}
+%   \captionsetup{format=plain, font=footnotesize}
+%   \caption[Enrichment analysis for post-infusional BMMCs and PBMCs]
+%   {\textbf{Enrichment analysis for post-infusional BMMCs and PBMCs} GO term enrichment analysis of significantly differentially expressed genes (non-responders vs. responders) for BMMCs and PBMCs. Terms are ranked by rich factor, which is the number of DE genes in the term divided by the number of background genes in that term. Dot plot depict the top 10 significantly enriched GO terms for biological processes (FDR <0.05). The dot size indicates the z-score, which is the number of DE genes with logFC >0 minus the number of DE genes with logFC <0 divided by the square root of the number of term-associated genes. Grey/white dots indicate the same number of genes with a logFC >0 and <0.
+%   }
+%   \label{fig:ora_pre_noncr_vs_cr}
+% \end{figure}
+
+\begin{figure}[ht!]
+  \includegraphics[width=16cm, center]{tcell_ident_marker.pdf}
+  \captionsetup{format=plain}
+  \caption[Marker genes for T cell identities]
+  {\textbf{Marker genes for T cell identities.} DE genes for each T cell identity were determined using the Wilcoxon rank sum test. Only CAR negative cells were analyzed. Genes with an FDR <0.05 and an absolute fold change >1.5 were considered statistically significant. Genes are ranked according to FDR. For each cell identity, 5 significant genes are shown. The colour intensity indicates the standardized average expression level in a cell identity. The dot size indicates  the percentage of expressing cells within each cell identity of the corresponding genes.
+  }
+  \label{fig:tcell_marker}
+\end{figure}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %  Monocle
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{figure}[ht!]
+%   \includegraphics[width=16cm, center]{monocle_p12_cd4.png}
+%   \captionsetup{format=plain, font=footnotesize}
+%   \caption[Single CD4+ T cell trajectories before/after Ide-cel (P12)]
+%   {\textbf{Single CD4+ T cell trajectories before/after Ide-cel (P12).} The label indicates the root in the principal graph. \% Max = Expression is scaled to percent of the maximum expression.
+%   }
+%   \label{fig:post_vs_pre}
+% \end{figure}
+%
+% \begin{figure}[ht!]
+%   \includegraphics[width=16cm, center]{monocle_p12_cd8.png}
+%   \captionsetup{format=plain, font=footnotesize}
+%   \caption[Single CD8+ T cell trajectories before/after Ide-cel (P12)]
+%   {\textbf{Single CD8+ T cell trajectories before/after Ide-cel (P12).}The label indicates the root in the principal graph. \% Max = Expression is scaled to percent of the maximum expression.
+%   }
+%   \label{fig:post_vs_pre}
+% \end{figure}
+%
+% \begin{figure}[ht!]
+%   \includegraphics[width=16cm, center]{monocle_p14_cd4.png}
+%   \captionsetup{format=plain, font=footnotesize}
+%   \caption[Single CD4+ T cell trajectories before/after Ide-cel (P14)]
+%   {\textbf{Single CD4+ T cell trajectories before/after Ide-cel (P14).} The label indicates the root in the principal graph. \% Max = Expression is scaled to percent of the maximum expression.
+%   }
+%   \label{fig:post_vs_pre}
+% \end{figure}
+%
+% \begin{figure}[ht!]
+%   \includegraphics[width=16cm, center]{monocle_p14_cd8.png}
+%   \captionsetup{format=plain, font=footnotesize}
+%   \caption[Single CD8+ T cell trajectories before/after Ide-cel (P14)]
+%   {\textbf{Single CD8+ T cell trajectories before/after Ide-cel (P14).}The label indicates the root in the principal graph. \% Max = Expression is scaled to percent of the maximum expression.
+%   }
+%   \label{fig:post_vs_pre}
+% \end{figure}
+%
+% \begin{figure}[ht!]
+%   \includegraphics[width=16cm, center]{monocle_p7_cd4.png}
+%   \captionsetup{format=plain, font=footnotesize}
+%   \caption[Single CD4+ T cell trajectories before/after Ide-cel (P07)]
+%   {\textbf{Single CD4+ T cell trajectories before/after Ide-cel (P07).} The label indicates the root in the principal graph. \% Max = Expression is scaled to percent of the maximum expression.
+%   }
+%   \label{fig:post_vs_pre}
+% \end{figure}
+%
+% \begin{figure}[ht!]
+%   \includegraphics[width=16cm, center]{monocle_p7_cd8.png}
+%   \captionsetup{format=plain, font=footnotesize}
+%   \caption[Single CD8+ T cell trajectories before/after Ide-cel (P07)]
+%   {\textbf{Single CD8+ T cell trajectories before/after Ide-cel (P07).}The label indicates the root in the principal graph. \% Max = Expression is scaled to percent of the maximum expression.
+%   }
+%   \label{fig:post_vs_pre}
+% \end{figure}
+%
+% \begin{figure}[ht!]
+%   \includegraphics[width=16cm, center]{monocle_p8_cd4.png}
+%   \captionsetup{format=plain, font=footnotesize}
+%   \caption[Single CD4+ T cell trajectories before/after Ide-cel (P08)]
+%   {\textbf{Single CD4+ T cell trajectories before/after Ide-cel (P08).} The label indicates the root in the principal graph. \% Max = Expression is scaled to percent of the maximum expression.
+%   }
+%   \label{fig:post_vs_pre}
+% \end{figure}
+%
+% \begin{figure}[ht!]
+%   \includegraphics[width=16cm, center]{monocle_p8_cd8.png}
+%   \captionsetup{format=plain, font=footnotesize}
+%   \caption[Single CD8+ T cell trajectories before/after Ide-cel (P08)]
+%   {\textbf{Single CD8+ T cell trajectories before/after Ide-cel (P08).}The label indicates the root in the principal graph. \% Max = Expression is scaled to percent of the maximum expression.
+%   }
+%   \label{fig:post_vs_pre}
+% \end{figure}
+
+% \begin{figure}[ht!]
+%   \includegraphics[width=16.5cm, center]{tcell_comp_post_vs_pre.pdf}
+%   \captionsetup{format=plain, font=footnotesize}
+%   \caption[Comparing post- with pre-infusional T cell types in nonCR and CR]
+%   {\textbf{Comparing post- with pre-infusional T cell types in nonCR and CR.} \textbf{(a)} Differences in T cell type composition between post and post- and pre-infusional PBMCs from CR and nonCR. For each cell type, the log fold change in mean cell fraction between post- and pre-infusional samples was calculated with the R package \texttt{speckle}. The cell fraction calculation includes all cell types (the denominator is the sum of all cells analyzed). For clarity, only cell types with a fold change >1.5 are shown.\textbf{(b)} GO term enrichment analysis for DEGs comparing post- with pre-infusional PBMCs in CR and nonCR. GO terms are ranked by rich factor, which is the number of DE genes in the term divided by the number of background genes in that term. Dot plot depict the top 10 significantly enriched GO terms for biological processes (FDR <0.05). The dot size indicates the z-score, which is the number of DE genes with logFC >0 minus the number of DE genes with logFC <0 divided by the square root of the number of term-associated genes. Grey/white dots indicate the same number of genes with a logFC >0 and <0.
+%   }
+%   \label{fig:post_vs_pre}
+% \end{figure}
+%
+%
+% \begin{figure}[ht!]
+%   \includegraphics[width=16cm, center]{CAR_vs_pre_T_ora.pdf}
+%   \captionsetup{format=plain, font=footnotesize}
+%   \caption[Enrichment analysis in CAR T cells (CD4 and CD8) compared to pre-infusional T cells from patients treated with Ide-cel]
+%   {\textbf{Enrichment analysis in CAR T cells (CD4 and CD8) compared to pre-infusional T cells from patients treated with Ide-cel} GO term enrichment analysis of significantly differentially expressed genes (CAR vs. pre-infusional T cells). Terms are ranked by rich factor, which is the number of DE genes in the term divided by the number of background genes in that term. Dot plot depict the top 10 significantly enriched GO terms for biological processes (FDR <0.05). The dot size indicates the z-score, which is the number of DE genes with logFC >0 minus the number of DE genes with logFC <0 divided by the square root of the number of term-associated genes. Grey/white dots indicate the same number of genes with a logFC >0 and <0.
+%   }
+%   \label{fig:ora_pre_noncr_vs_cr}
+% \end{figure}
+%
+% \begin{figure}[ht!]
+%   \includegraphics[width=16cm, center]{tcell_dgea_p12_CAR_vs_pre.pdf}
+%   \captionsetup{format=plain, font=footnotesize}
+%   \caption[Enrichment analysis in CAR T cells (T cell subtypes) compared to pre-infusional T cells from patients treated with Ide-cel]
+%   {\textbf{Enrichment analysis in CAR T cells (T cell subtypes) compared to pre-infusional T cells from patients treated with Ide-cel} GO term enrichment analysis of significantly differentially expressed genes (CAR vs. pre-infusional T cells).No significantly enriched GO terms were found for patient 14.
+%   }
+%   \label{fig:ora_pre_noncr_vs_cr}
+% \end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\printbibliography[heading=bibintoc]
+
+\end{document}

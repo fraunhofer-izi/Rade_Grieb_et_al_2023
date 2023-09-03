@@ -1,0 +1,14 @@
+# project and workdata paths
+base:
+  homes:  "<path to repo>"
+  workdata:  "<path to data>/"
+
+grieb:
+  fastq:  "<path to fastq>"
+  work:  "<path to data>/cohorts/grieb/"
+  data_dl:  "<path to data>/cohorts/grieb/"
+  seurat:  "<path to data>/cohorts/grieb/seurat/"
+  phenodata:  "data/clinicopathological_discovery.csv"
+
+meta:
+  work:  "<path to data>/meta/"
