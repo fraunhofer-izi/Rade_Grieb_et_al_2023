@@ -4,7 +4,7 @@ This repository contains code used to produce the results in: Nora Grieb, Ronald
 
 ## Singularity
 
-All scripts were developed in a Singularity image with Rstudio server. [See README](singularity/rstudio_server/) in `./singularity/`. 
+All scripts were developed in a Singularity image with Rstudio server. [See README](singularity/) in `./singularity/`. 
 
 ## Reproduction
 
